@@ -46,3 +46,9 @@ bootRun {
     println "zone: $activeProfile"
     systemProperty "spring.profiles.active", activeProfile
 }
+
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
+}
