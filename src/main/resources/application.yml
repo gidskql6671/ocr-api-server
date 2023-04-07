@@ -9,11 +9,27 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+file.dir: /images/
 
 ---
 spring:
+  config:
+    activate:
+      on-profile: dev
   jpa:
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+server:
+  port: 80
