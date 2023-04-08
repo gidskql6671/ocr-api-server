@@ -1,5 +1,6 @@
 package knu.dong.ocr_server.service;
 
+import knu.dong.ocr_server.api.OcrAPI;
 import knu.dong.ocr_server.domain.Picture;
 import knu.dong.ocr_server.repository.PictureRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,7 @@ public class OcrService {
 			return null;
 		}
 
-		// ocr 파이썬 서버 호출
-
-		return "test";
+		return OcrAPI.ocr(filepath);
 	}
 
 	private String saveImage(MultipartFile files) {
