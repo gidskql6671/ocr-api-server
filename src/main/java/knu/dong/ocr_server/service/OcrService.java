@@ -30,6 +30,7 @@ public class OcrService {
 			return null;
 		}
 
+		log.info("filepath : " + filepath);
 		return OcrAPI.ocr(filepath);
 	}
 
