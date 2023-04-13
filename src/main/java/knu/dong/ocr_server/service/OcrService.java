@@ -31,7 +31,10 @@ public class OcrService {
 		}
 
 		log.info("filepath : " + filepath);
-		return OcrAPI.ocr(filepath);
+		String result = OcrAPI.ocr(filepath);
+		log.info("result : " + result);
+
+		return result;
 	}
 
 	private String saveImage(MultipartFile files) {
