@@ -2,6 +2,7 @@ package knu.dong.ocr_server.service;
 
 import knu.dong.ocr_server.api.OcrAPI;
 import knu.dong.ocr_server.domain.Picture;
+import knu.dong.ocr_server.dto.OcrResponse;
 import knu.dong.ocr_server.repository.PictureRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class OcrService {
 	private final PictureRepository pictureRepository;
 
 
-	public String ocr(MultipartFile files) {
+	public OcrResponse ocr(MultipartFile files) {
 		String filepath = saveImage(files);
 
 		if (filepath == null) {
@@ -31,8 +32,14 @@ public class OcrService {
 		}
 
 		log.info("filepath : " + filepath);
-		String result = OcrAPI.ocr(filepath);
-		log.info("result : " + result);
+		OcrResponse result = OcrAPI.ocr(filepath);
+
+		if (result == null) {
+			log.info("왜 null?");
+			return null;
+		}
+
+		log.info(result.toString());
 
 		return result;
 	}

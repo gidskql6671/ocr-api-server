@@ -1,10 +1,18 @@
 package knu.dong.ocr_server.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@ToString
+@NoArgsConstructor
 public class OcrResponse {
-	private final String resultString;
+	@JsonProperty(value = "answer_percent")
+	private double answerPercent;
+	@JsonProperty(value = "correct_string")
+	private String correctString;
+	@JsonProperty(value = "origin_string")
+	private String originString;
 }

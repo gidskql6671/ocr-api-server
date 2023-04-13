@@ -18,9 +18,7 @@ public class OcrController {
 
 	@PostMapping
 	public OcrResponse ocr(@RequestParam("image") MultipartFile image) {
-		String result = ocrService.ocr(image);
-
-		return new OcrResponse(result);
+		return ocrService.ocr(image);
 	}
 
 }

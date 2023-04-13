@@ -1,5 +1,6 @@
 package knu.dong.ocr_server.api;
 
+import knu.dong.ocr_server.dto.OcrResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestClientException;
@@ -11,26 +12,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class OcrAPI {
 	private static final RestTemplate restTemplate = new RestTemplate();
 
-	public static String ocr(String imageAbsolutePath) {
+	public static OcrResponse ocr(String imageAbsolutePath) {
 		String url = "http://localhost:8000/ocr";
 
 		UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
 				.queryParam("path", imageAbsolutePath)
 				.build(true);
 
-		HttpEntity<String> response;
+		HttpEntity<OcrResponse> response;
 		try {
-			response = restTemplate.getForEntity(uriBuilder.toUri(), String.class);
+			response = restTemplate.getForEntity(uriBuilder.toUri(), OcrResponse.class);
 
-			String body = response.getBody();
-
-			log.debug(body);
-
-			return body;
+			return response.getBody();
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
 
-			return "error";
+			return null;
 		}
 
 	}
