@@ -12,6 +12,6 @@ public class ProblemController {
 
 	@GetMapping
 	public String test(int studentGrade, int problemGrade) {
-		return "test";
+		return "대학교";
 	}
 }
