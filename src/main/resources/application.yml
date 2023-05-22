@@ -31,6 +31,9 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    username: caps2
+    password: capstone2
 server:
   port: 80
 
