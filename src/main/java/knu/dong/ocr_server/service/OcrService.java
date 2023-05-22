@@ -44,6 +44,26 @@ public class OcrService {
 		return result;
 	}
 
+	public OcrResponse ocr(MultipartFile files, String correctText) {
+		String filepath = saveImage(files);
+
+		if (filepath == null) {
+			return null;
+		}
+
+		log.info("filepath : " + filepath);
+		OcrResponse result = OcrAPI.ocr(filepath, correctText);
+
+		if (result == null) {
+			log.info("왜 null?");
+			return null;
+		}
+
+		log.info(result.toString());
+
+		return result;
+	}
+
 	private String saveImage(MultipartFile files) {
 		if (files.isEmpty()) {
 			return "";

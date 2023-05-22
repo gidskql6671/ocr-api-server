@@ -3,10 +3,7 @@ package knu.dong.ocr_server.controller;
 import knu.dong.ocr_server.dto.OcrResponse;
 import knu.dong.ocr_server.service.OcrService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -19,6 +16,11 @@ public class OcrController {
 	@PostMapping
 	public OcrResponse ocr(@RequestParam("image") MultipartFile image) {
 		return ocrService.ocr(image);
+	}
+
+	@PostMapping("/{correctText}")
+	public OcrResponse ocr(@RequestParam("image") MultipartFile image, @PathVariable("correctText") String correctText) {
+		return ocrService.ocr(image, correctText);
 	}
 
 }
