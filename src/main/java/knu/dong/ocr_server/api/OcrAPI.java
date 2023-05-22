@@ -33,15 +33,16 @@ public class OcrAPI {
 	}
 
 	public static OcrResponse ocr(String imageAbsolutePath, String correctText) {
-		String url = "http://localhost:8000/ocr/" + correctText;
+		String url = "http://localhost:8000/ocr";
 
-		UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+		String uriString = UriComponentsBuilder.fromHttpUrl(url)
 				.queryParam("path", imageAbsolutePath)
-				.build(true);
+				.queryParam("correctText", correctText)
+				.toUriString();
 
 		HttpEntity<OcrResponse> response;
 		try {
-			response = restTemplate.getForEntity(uriBuilder.toUri(), OcrResponse.class);
+			response = restTemplate.getForEntity(uriString, OcrResponse.class);
 
 			return response.getBody();
 		} catch (RestClientException e) {
