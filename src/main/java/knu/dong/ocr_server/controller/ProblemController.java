@@ -1,5 +1,6 @@
 package knu.dong.ocr_server.controller;
 
+import knu.dong.ocr_server.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProblemController {
 
+	private final ProblemService problemService;
+
 	@GetMapping
 	public String test(int studentGrade, int problemGrade) {
-		return "대학교";
+		return problemService.findProblem(studentGrade, problemGrade);
 	}
 }
