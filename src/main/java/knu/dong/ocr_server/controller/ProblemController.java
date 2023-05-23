@@ -14,7 +14,7 @@ public class ProblemController {
 	private final ProblemService problemService;
 
 	@GetMapping
-	public String test(int studentGrade, int problemGrade) {
+	public String findProblemContent(int studentGrade, int problemGrade) {
 		return problemService.findProblem(studentGrade, problemGrade);
 	}
 }
