@@ -12,6 +12,10 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
+cloud:
+  aws:
+    stack.auto: false
+    region.static: ap-northeast-2
 
 ---
 spring:

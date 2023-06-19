@@ -1,5 +1,7 @@
 package knu.dong.ocr_server.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import knu.dong.ocr_server.api.OcrAPI;
 import knu.dong.ocr_server.domain.Picture;
 import knu.dong.ocr_server.dto.OcrResponse;
@@ -21,7 +23,12 @@ public class OcrService {
 
 	@Value("${file.dir}")
 	private String fileDir;
+
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
+
 	private final PictureRepository pictureRepository;
+	private final AmazonS3Client amazonS3Client;
 
 
 	public OcrResponse ocr(MultipartFile files) {
@@ -76,7 +83,6 @@ public class OcrService {
 
 		Picture picture = new Picture(filepath);
 
-
 		try {
 			files.transferTo(new File(filepath));
 		} catch (IOException e) {
@@ -87,5 +93,30 @@ public class OcrService {
 		Picture savedPicture = pictureRepository.save(picture);
 
 		return savedPicture.getFilepath();
+	}
+
+	private String saveImageToS3(MultipartFile files) {
+		if (files.isEmpty()) {
+			return "";
+		}
+
+		try {
+			String uuid = UUID.randomUUID().toString();
+			String ext = ".jpg";
+			String filename = uuid + ext;
+			String fileUrl= "https://" + bucket + "/test" + filename;
+
+			ObjectMetadata metadata= new ObjectMetadata();
+			metadata.setContentType(files.getContentType());
+			metadata.setContentLength(files.getSize());
+
+			amazonS3Client.putObject(bucket, filename, files.getInputStream(),metadata);
+			pictureRepository.save(new Picture(fileUrl));
+
+			return fileUrl;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 }
